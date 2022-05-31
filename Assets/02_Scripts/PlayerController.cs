@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject bullet;
     Movement movement;
     Weapon weapon;
+    Animator anim;
+    bool isDie = false;
 
     int score;
 
@@ -30,10 +33,12 @@ public class PlayerController : MonoBehaviour
     {
         movement = GetComponent<Movement>();
         weapon = GetComponent<Weapon>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        if (isDie) return;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -55,5 +60,19 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(transform.position.x, stageData.LimitMin.x, stageData.LimitMax.x), 
             Mathf.Clamp(transform.position.y, stageData.LimitMin.y, stageData.LimitMax.y),
             0);
+    }
+    
+    public void Die()
+    {
+        movement.MoveTo(Vector2.zero);
+        anim.SetTrigger("onDie");
+        Destroy(GetComponent<CircleCollider2D>());
+        isDie = true;
+    }
+
+    public void OnDieEvent()
+    {
+        PlayerPrefs.SetInt("Score", score);
+        SceneManager.LoadScene("GameOver");
     }
 }

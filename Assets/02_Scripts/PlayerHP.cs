@@ -6,21 +6,27 @@ public class PlayerHP : MonoBehaviour
 {
     [SerializeField] private float maxHP = 10f;
     [SerializeField] SpriteRenderer sr;
+    PlayerController playerController;
     float currentHP;
+    int a;
 
-    public float MaxHP 
+    public float MaxHP => maxHP;
+    public float CurrentHP => currentHP;
+
+    /*public float MaxHP 
     { 
         get { return maxHP; }
      }
     public float CurrentHP
     {
         get { return currentHP; }
-    }
+    }*/
 
     void Start()
     {
         currentHP = maxHP;
         sr = GetComponent<SpriteRenderer>();
+        playerController = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -40,5 +46,8 @@ public class PlayerHP : MonoBehaviour
         currentHP -= damage;
         StopCoroutine(Hit());
         StartCoroutine(Hit());
+
+        if (currentHP <= 0)
+            playerController.Die();
     }
 }

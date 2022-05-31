@@ -171,3 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c440ea1263f502542b57f5264f27dc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  scorePoint: 100
+  explosion: {fileID: 4505835545954468154, guid: 3f1a35b5d4106de429e2f9769fe0fbd4, type: 3}
