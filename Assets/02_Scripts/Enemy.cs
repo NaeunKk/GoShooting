@@ -28,6 +28,5 @@ public class Enemy : MonoBehaviour
         explosion = Instantiate(explosion);
         playerController.Score += scorePoint;
         Destroy(gameObject);
-        Destroy(explosion);
     }
 }
