@@ -25,8 +25,9 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        explosion = Instantiate(explosion);
         playerController.Score += scorePoint;
+        GameObject clone = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
+        Destroy(clone.gameObject, 1);
     }
 }
