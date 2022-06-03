@@ -6,6 +6,12 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float attackRate = 0.1f;
+    ObjectPooler pooler;
+
+    private void Awake()
+    {
+        pooler = GetComponent<ObjectPooler>();
+    }
 
     public void StartFiring()
     {
@@ -21,7 +27,8 @@ public class Weapon : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            pooler.SpawnObject(transform.position, Quaternion.identity);
+            //Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(attackRate);
         }
     }

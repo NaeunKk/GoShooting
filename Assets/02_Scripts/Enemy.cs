@@ -8,9 +8,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scorePoint = 100;
     [SerializeField] GameObject explosion;
     PlayerController playerController;
+    ObjectPooler enemyPooler;
 
     private void Awake()
     {
+        enemyPooler = GameObject.Find("EnemySpwaner").GetComponent<ObjectPooler>();
         playerController = FindObjectOfType<PlayerController>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,7 +29,8 @@ public class Enemy : MonoBehaviour
     {
         playerController.Score += scorePoint;
         GameObject clone = Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        enemyPooler.ReturnObj(gameObject);
         Destroy(clone.gameObject, 1);
     }
 }
